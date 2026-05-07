@@ -1,0 +1,35 @@
+experiment_name: custom_cnn_fer2013
+
+model:
+  architecture: custom_cnn
+  dropout: 0.4
+
+data:
+  dataset: fer2013
+  data_dir: model/data/fer2013
+  num_classes: 7
+  image_size: 48
+  val_split: 0.1
+
+augmentation:
+  normalize_mean: [0.507, 0.507, 0.507]
+  normalize_std: [0.255, 0.255, 0.255]
+
+training:
+  epochs: 25
+  batch_size: 64
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: adam
+  scheduler: cosine
+  early_stopping_patience: 6
+  gradient_clip: 1.0
+  label_smoothing: 0.1
+
+output:
+  checkpoint_dir: model/checkpoints
+  export_onnx: false
+
+logging:
+  save_gradcam_samples: false
+  save_confusion_matrix: true

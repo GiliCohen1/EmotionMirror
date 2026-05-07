@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# ML artifacts
+model/checkpoints/*.pt
+model/checkpoints/*.onnx
+model/checkpoints/*.png
+model/data/fer2013/
+agents/runs/
+
+# Secrets
+kaggle.json
+.env
+*.env
+emotionmirror.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+mobile/node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+node_modules/

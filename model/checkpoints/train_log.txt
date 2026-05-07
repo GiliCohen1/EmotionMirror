@@ -1,0 +1,252 @@
+C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\utils\data\dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Traceback (most recent call last):
+  File [35m"C:\Users\gilic\EmotionMirror\model\train.py"[0m, line [35m439[0m, in [35m<module>[0m
+  File [35m"C:\Users\gilic\EmotionMirror\model\train.py"[0m, line [35m375[0m, in [35mtrain[0m
+    print[1;31m(f"  [best]  New best! Saved to {checkpoint_path}"[0m)
+         [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\serialization.py"[0m, line [35m1578[0m, in [35mload[0m
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+[1;35m_pickle.UnpicklingError[0m: [35mWeights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL numpy._core.multiarray.scalar was not an allowed global by default. Please use `torch.serialization.add_safe_globals([numpy._core.multiarray.scalar])` or the `torch.serialization.safe_globals([numpy._core.multiarray.scalar])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.[0m
+best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  12/25 | train loss: 1.3023 acc: 0.582 | val loss: 1.3751 acc: 0.542 | lr: 5.32e-04 | 63.8m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  13/25 | train loss: 1.2866 acc: 0.587 | val loss: 1.3499 acc: 0.540 | lr: 4.69e-04 | 76.8m
+Epoch  14/25 | train loss: 1.2563 acc: 0.608 | val loss: 1.3605 acc: 0.554 | lr: 4.07e-04 | 89.9m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  15/25 | train loss: 1.2304 acc: 0.619 | val loss: 1.3427 acc: 0.548 | lr: 3.46e-04 | 102.6m
+Epoch  16/25 | train loss: 1.2157 acc: 0.626 | val loss: 1.3236 acc: 0.563 | lr: 2.88e-04 | 114.9m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  17/25 | train loss: 1.2142 acc: 0.629 | val loss: 1.3064 acc: 0.564 | lr: 2.33e-04 | 129.9m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  18/25 | train loss: 1.1908 acc: 0.644 | val loss: 1.3049 acc: 0.573 | lr: 1.82e-04 | 146.0m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  19/25 | train loss: 1.1784 acc: 0.649 | val loss: 1.3081 acc: 0.573 | lr: 1.36e-04 | 160.3m
+Epoch  20/25 | train loss: 1.1639 acc: 0.655 | val loss: 1.3070 acc: 0.571 | lr: 9.64e-05 | 175.0m
+Epoch  21/25 | train loss: 1.1444 acc: 0.665 | val loss: 1.2842 acc: 0.585 | lr: 6.28e-05 | 187.7m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  22/25 | train loss: 1.1486 acc: 0.664 | val loss: 1.3003 acc: 0.571 | lr: 3.61e-05 | 203.4m
+Epoch  23/25 | train loss: 1.1374 acc: 0.670 | val loss: 1.3006 acc: 0.580 | lr: 1.67e-05 | 217.5m
+Epoch  24/25 | train loss: 1.1368 acc: 0.668 | val loss: 1.2935 acc: 0.580 | lr: 4.94e-06 | 231.3m
+Epoch  25/25 | train loss: 1.1345 acc: 0.670 | val loss: 1.2933 acc: 0.571 | lr: 1.00e-06 | 244.2m
+
+============================================================
+  Final evaluation on test set
+============================================================
+load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+Traceback (most recent call last):
+  File "C:\Users\gilic\EmotionMirror\model\train.py", line 464, in <module>
+    train(cfg, resume=args.resume)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gilic\EmotionMirror\model\train.py", line 298, in train
+    ckpt = torch.load(checkpoint_path, map_location=device)
+  File "C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\serialization.py", line 1578, in load
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+_pickle.UnpicklingError: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL numpy._core.multiarray.scalar was not an allowed global by default. Please use `torch.serialization.add_safe_globals([numpy._core.multiarray.scalar])` or the `torch.serialization.safe_globals([numpy._core.multiarray.scalar])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+Traceback (most recent call last):
+  File [35m"C:\Users\gilic\EmotionMirror\model\train.py"[0m, line [35m464[0m, in [35m<module>[0m
+    [31mtrain[0m[1;31m(cfg, resume=args.resume)[0m
+    [31m~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"C:\Users\gilic\EmotionMirror\model\train.py"[0m, line [35m298[0m, in [35mtrain[0m
+    ckpt = torch.load(checkpoint_path, map_location=device)
+  File [35m"C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\serialization.py"[0m, line [35m1578[0m, in [35mload[0m
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+[1;35m_pickle.UnpicklingError[0m: [35mWeights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL numpy._core.multiarray.scalar was not an allowed global by default. Please use `torch.serialization.add_safe_globals([numpy._core.multiarray.scalar])` or the `torch.serialization.safe_globals([numpy._core.multiarray.scalar])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.[0m
+[Device] CPU — training will be slow, consider Google Colab for GPU
+[Dataset] train: 28709 images across 7 classes
+[Dataset] test: 7178 images across 7 classes
+[DataLoader] train: 404 batches | val: 23 batches | test: 57 batches
+[Model] CustomCNN: 2,357,991 params
+[Resume] Loaded checkpoint from epoch 11 (val acc 0.531)
+[Resume] Continuing from epoch 12
+
+============================================================
+  Training: custom_cnn_fer2013
+  Epochs: 25 | Batch: 64
+  Device: cpu
+============================================================
+
+C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\utils\data\dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+[Device] CPU — training will be slow, consider Google Colab for GPU
+[Dataset] train: 28709 images across 7 classes
+[Dataset] test: 7178 images across 7 classes
+[DataLoader] train: 404 batches | val: 23 batches | test: 57 batches
+[Model] CustomCNN: 2,357,991 params
+[Resume] Loaded checkpoint from epoch 12 (val acc 0.542)
+[Resume] Continuing from epoch 13
+
+============================================================
+  Training: custom_cnn_fer2013
+  Epochs: 25 | Batch: 64
+  Device: cpu
+============================================================
+
+C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\utils\data\dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+Epoch   1/25 | train loss: 1.9540 acc: 0.177 | val loss: 1.8947 acc: 0.210 | lr: 9.96e-04 | 9.5m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  12/25 | train loss: 1.3013 acc: 0.582 | val loss: 1.3480 acc: 0.543 | lr: 5.92e-04 | 12.7m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  13/25 | train loss: 1.2794 acc: 0.592 | val loss: 1.3596 acc: 0.544 | lr: 5.30e-04 | 13.4m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch   2/25 | train loss: 1.8341 acc: 0.285 | val loss: 1.8092 acc: 0.294 | lr: 9.84e-04 | 23.0m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  13/25 | train loss: 1.2781 acc: 0.597 | val loss: 1.3504 acc: 0.548 | lr: 5.85e-04 | 25.7m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  14/25 | train loss: 1.2525 acc: 0.610 | val loss: 1.3456 acc: 0.551 | lr: 5.24e-04 | 26.3m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch   3/25 | train loss: 1.6844 acc: 0.378 | val loss: 1.6971 acc: 0.358 | lr: 9.65e-04 | 36.1m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  14/25 | train loss: 1.2580 acc: 0.605 | val loss: 1.3565 acc: 0.539 | lr: 5.73e-04 | 38.4m
+Epoch  15/25 | train loss: 1.2378 acc: 0.617 | val loss: 1.3512 acc: 0.547 | lr: 5.13e-04 | 38.8m
+Epoch   4/25 | train loss: 1.5750 acc: 0.432 | val loss: 1.5517 acc: 0.431 | lr: 9.38e-04 | 48.7m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  15/25 | train loss: 1.2499 acc: 0.611 | val loss: 1.3545 acc: 0.548 | lr: 5.57e-04 | 50.7m
+Epoch  16/25 | train loss: 1.2297 acc: 0.619 | val loss: 1.3496 acc: 0.551 | lr: 4.99e-04 | 51.1m
+Epoch   5/25 | train loss: 1.5171 acc: 0.467 | val loss: 1.5502 acc: 0.436 | lr: 9.05e-04 | 61.2m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  16/25 | train loss: 1.2305 acc: 0.619 | val loss: 1.3636 acc: 0.545 | lr: 5.37e-04 | 64.9m
+Epoch  17/25 | train loss: 1.2173 acc: 0.629 | val loss: 1.3574 acc: 0.550 | lr: 4.81e-04 | 66.8m
+Epoch   6/25 | train loss: 1.4824 acc: 0.485 | val loss: 1.4992 acc: 0.470 | lr: 8.65e-04 | 77.6m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  17/25 | train loss: 1.2209 acc: 0.627 | val loss: 1.3379 acc: 0.562 | lr: 5.14e-04 | 81.2m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  18/25 | train loss: 1.2034 acc: 0.637 | val loss: 1.3293 acc: 0.562 | lr: 4.60e-04 | 82.4m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch   7/25 | train loss: 1.4376 acc: 0.512 | val loss: 1.4845 acc: 0.466 | lr: 8.19e-04 | 93.0m
+Epoch  18/25 | train loss: 1.2029 acc: 0.632 | val loss: 1.3384 acc: 0.556 | lr: 4.87e-04 | 95.8m
+Epoch  19/25 | train loss: 1.1860 acc: 0.648 | val loss: 1.3327 acc: 0.563 | lr: 4.36e-04 | 96.2m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch   8/25 | train loss: 1.4079 acc: 0.528 | val loss: 1.4439 acc: 0.498 | lr: 7.68e-04 | 107.1m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  19/25 | train loss: 1.1926 acc: 0.642 | val loss: 1.3357 acc: 0.563 | lr: 4.56e-04 | 110.2m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  20/25 | train loss: 1.1820 acc: 0.648 | val loss: 1.3256 acc: 0.561 | lr: 4.09e-04 | 111.2m
+Epoch   9/25 | train loss: 1.3831 acc: 0.538 | val loss: 1.4386 acc: 0.501 | lr: 7.13e-04 | 121.7m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  20/25 | train loss: 1.1823 acc: 0.645 | val loss: 1.3327 acc: 0.560 | lr: 4.24e-04 | 123.2m
+Epoch  21/25 | train loss: 1.1711 acc: 0.652 | val loss: 1.3240 acc: 0.575 | lr: 3.79e-04 | 124.1m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  10/25 | train loss: 1.3591 acc: 0.551 | val loss: 1.4321 acc: 0.503 | lr: 6.55e-04 | 135.5m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  21/25 | train loss: 1.1659 acc: 0.653 | val loss: 1.3269 acc: 0.558 | lr: 3.89e-04 | 138.6m
+Epoch  22/25 | train loss: 1.1541 acc: 0.661 | val loss: 1.3040 acc: 0.578 | lr: 3.48e-04 | 139.5m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  11/25 | train loss: 1.3316 acc: 0.568 | val loss: 1.3828 acc: 0.529 | lr: 5.94e-04 | 150.4m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  22/25 | train loss: 1.1599 acc: 0.659 | val loss: 1.3229 acc: 0.568 | lr: 3.53e-04 | 152.7m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  23/25 | train loss: 1.1449 acc: 0.667 | val loss: 1.3019 acc: 0.570 | lr: 3.16e-04 | 153.4m
+Epoch  12/25 | train loss: 1.3122 acc: 0.575 | val loss: 1.3950 acc: 0.524 | lr: 5.32e-04 | 164.3m
+Epoch  23/25 | train loss: 1.1703 acc: 0.656 | val loss: 1.3362 acc: 0.552 | lr: 3.16e-04 | 166.7m
+Epoch  24/25 | train loss: 1.1307 acc: 0.677 | val loss: 1.3295 acc: 0.561 | lr: 2.83e-04 | 166.9m
+Epoch  13/25 | train loss: 1.2885 acc: 0.586 | val loss: 1.3817 acc: 0.534 | lr: 4.69e-04 | 177.8m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  24/25 | train loss: 1.1572 acc: 0.658 | val loss: 1.3017 acc: 0.576 | lr: 2.79e-04 | 179.4m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  25/25 | train loss: 1.1447 acc: 0.665 | val loss: 1.3012 acc: 0.566 | lr: 2.50e-04 | 179.5m
+
+============================================================
+  Final evaluation on test set
+============================================================
+Epoch  14/25 | train loss: 1.2663 acc: 0.599 | val loss: 1.3663 acc: 0.538 | lr: 4.07e-04 | 189.4m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+
+Test accuracy: 0.6330
+Best val accuracy: 0.5784
+
+              precision    recall  f1-score   support
+
+       angry       0.58      0.54      0.56       958
+     disgust       0.52      0.61      0.56       111
+        fear       0.50      0.40      0.44      1024
+       happy       0.83      0.82      0.83      1774
+     neutral       0.72      0.82      0.77       831
+         sad       0.57      0.62      0.59      1233
+    surprise       0.51      0.52      0.51      1247
+
+    accuracy                           0.63      7178
+   macro avg       0.60      0.62      0.61      7178
+weighted avg       0.63      0.63      0.63      7178
+
+
+Total training time: 182.3 minutes
+Artifacts saved to: model\checkpoints
+Epoch  25/25 | train loss: 1.1373 acc: 0.674 | val loss: 1.3125 acc: 0.570 | lr: 2.42e-04 | 189.1m
+
+============================================================
+  Final evaluation on test set
+============================================================
+
+Test accuracy: 0.5986
+Best val accuracy: 0.5760
+
+              precision    recall  f1-score   support
+
+       angry       0.50      0.58      0.53       958
+     disgust       0.37      0.68      0.48       111
+        fear       0.46      0.28      0.35      1024
+       happy       0.80      0.81      0.81      1774
+     neutral       0.65      0.85      0.73       831
+         sad       0.53      0.62      0.57      1233
+    surprise       0.52      0.38      0.44      1247
+
+    accuracy                           0.60      7178
+   macro avg       0.55      0.60      0.56      7178
+weighted avg       0.59      0.60      0.59      7178
+
+
+Total training time: 189.9 minutes
+Artifacts saved to: model\checkpoints
+Epoch  15/25 | train loss: 1.2438 acc: 0.611 | val loss: 1.3771 acc: 0.545 | lr: 3.46e-04 | 196.3m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  16/25 | train loss: 1.2258 acc: 0.624 | val loss: 1.3368 acc: 0.553 | lr: 2.88e-04 | 200.9m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  17/25 | train loss: 1.2226 acc: 0.623 | val loss: 1.3064 acc: 0.571 | lr: 2.33e-04 | 205.5m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  18/25 | train loss: 1.1953 acc: 0.640 | val loss: 1.3402 acc: 0.563 | lr: 1.82e-04 | 210.3m
+Epoch  19/25 | train loss: 1.1859 acc: 0.645 | val loss: 1.3184 acc: 0.569 | lr: 1.36e-04 | 214.9m
+Epoch  20/25 | train loss: 1.1653 acc: 0.657 | val loss: 1.3170 acc: 0.568 | lr: 9.64e-05 | 219.7m
+Epoch  21/25 | train loss: 1.1604 acc: 0.660 | val loss: 1.3157 acc: 0.569 | lr: 6.28e-05 | 224.4m
+Epoch  22/25 | train loss: 1.1614 acc: 0.658 | val loss: 1.3019 acc: 0.576 | lr: 3.61e-05 | 229.0m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  23/25 | train loss: 1.1510 acc: 0.665 | val loss: 1.2954 acc: 0.576 | lr: 1.67e-05 | 233.9m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  24/25 | train loss: 1.1439 acc: 0.669 | val loss: 1.2835 acc: 0.588 | lr: 4.94e-06 | 238.5m
+  [best]  New best! Saved to model\checkpoints\custom_cnn_fer2013_best.pt
+Epoch  25/25 | train loss: 1.1464 acc: 0.664 | val loss: 1.2993 acc: 0.565 | lr: 1.00e-06 | 243.2m
+
+============================================================
+  Final evaluation on test set
+============================================================
+Traceback (most recent call last):
+  File [35m"C:\Users\gilic\EmotionMirror\model\train.py"[0m, line [35m450[0m, in [35m<module>[0m
+    [1;31mnp.random.[0mseed(args.seed)
+    [1;31m^^^^^^^^^^[0m
+  File [35m"C:\Users\gilic\EmotionMirror\model\train.py"[0m, line [35m375[0m, in [35mtrain[0m
+    print[1;31m(f"  [best]  New best! Saved to {checkpoint_path}"[0m)
+         [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"C:\Users\gilic\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\serialization.py"[0m, line [35m1578[0m, in [35mload[0m
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+[1;35m_pickle.UnpicklingError[0m: [35mWeights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL numpy._core.multiarray.scalar was not an allowed global by default. Please use `torch.serialization.add_safe_globals([numpy._core.multiarray.scalar])` or the `torch.serialization.safe_globals([numpy._core.multiarray.scalar])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.[0m
