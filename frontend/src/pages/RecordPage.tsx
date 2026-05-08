@@ -48,7 +48,7 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
       const data = captureBase64();
       if (data) {
         framesRef.current.push({ data, capturedAt: Date.now() });
-        setFrameCount((n) => n + 1);
+        setFrameCount(n => n + 1);
       }
     }, 2000);
   };
@@ -67,7 +67,7 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
     framesRef.current = [];
 
     if (frames.length === 0) {
-      setSessionNote("Session was too short — no frames were captured. Record for at least 5 seconds.");
+      setSessionNote("Session was too short — no frames captured. Record for at least 5 seconds.");
       return;
     }
 
@@ -102,9 +102,9 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
     setReadings(newReadings);
 
     if (!anyFaceFound) {
-      setSessionNote("No face was detected in any frame. Make sure your face is well-lit and centered in the camera.");
+      setSessionNote("No face detected in any frame. Make sure your face is well-lit and centered.");
     } else if (newReadings.length === 0) {
-      setSessionNote("Face was detected but emotion confidence was too low. Try better lighting or move closer to the camera.");
+      setSessionNote("Face detected but confidence was too low. Try better lighting or move closer.");
     }
   };
 
@@ -117,21 +117,25 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
   return (
     <div className="app">
       <Navbar onLogout={onLogout} theme={theme} onToggleTheme={onToggleTheme} />
+
       <main className="record-page">
-        <div className="record-page__left">
 
-          {/* Webcam card — controls overlaid at the bottom so they're always visible */}
-          <div className={`webcam-card ${running ? "webcam-card--recording" : ""}`}>
-            <video ref={videoRef} autoPlay muted playsInline className="webcam-video" />
+        {/* ── LEFT: square webcam ── */}
+        <div className="webcam-col">
+          <div className={`webcam-card${running ? " webcam-card--recording" : ""}`}>
+            {/* Square video wrapper */}
+            <div className="webcam-video-wrap">
+              <video ref={videoRef} autoPlay muted playsInline className="webcam-video" />
+              {running && (
+                <div className="webcam-top-badge">
+                  <span className="recording-dot" />
+                  <span>REC</span>
+                  <span className="webcam-frame-count">{frameCount} frames</span>
+                </div>
+              )}
+            </div>
 
-            {running && (
-              <div className="webcam-top-badge">
-                <span className="recording-dot" />
-                <span>Recording</span>
-                <span className="webcam-frame-count">{frameCount} frames</span>
-              </div>
-            )}
-
+            {/* Controls bar — always visible, no scrolling needed */}
             <div className="webcam-controls-bar">
               {!running && !analyzing && (
                 <button className="btn btn--primary btn--lg" onClick={startSession}>
@@ -140,9 +144,7 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
               )}
               {running && (
                 <>
-                  <span className="webcam-hint">
-                    Record at least 5 seconds for best results
-                  </span>
+                  <span className="webcam-hint">≥ 5 seconds for best results</span>
                   <button className="btn btn--danger btn--lg" onClick={stopSession}>
                     ■ End Session
                   </button>
@@ -152,13 +154,10 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
                 <div className="progress-wrap">
                   <div className="progress-header">
                     <span className="progress-label">Analyzing {progress.total} frames…</span>
-                    <span className="progress-count">{progress.done} / {progress.total}</span>
+                    <span className="progress-count">{progress.done}/{progress.total}</span>
                   </div>
                   <div className="progress-bar">
-                    <div
-                      className="progress-bar__fill"
-                      style={{ width: `${(progress.done / progress.total) * 100}%` }}
-                    />
+                    <div className="progress-bar__fill" style={{ width: `${(progress.done / progress.total) * 100}%` }} />
                   </div>
                 </div>
               )}
@@ -166,10 +165,13 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
           </div>
 
           {sessionNote && (
-            <div className="session-note session-note--warn">
-              ⚠️ {sessionNote}
-            </div>
+            <div className="session-note session-note--warn">⚠️ {sessionNote}</div>
           )}
+        </div>
+
+        {/* ── RIGHT: detection result + session summary (scrollable) ── */}
+        <div className="record-col-right">
+          <EmotionDisplay result={lastResult} running={running} />
 
           <div className="timeline-card">
             <EmotionTimeline readings={readings} />
@@ -186,9 +188,6 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
           </div>
         </div>
 
-        <aside className="record-page__right">
-          <EmotionDisplay result={lastResult} running={running} />
-        </aside>
       </main>
     </div>
   );
