@@ -6,21 +6,20 @@ const EMOJI: Record<Emotion, string> = {
 };
 
 const COLOR: Record<Emotion, string> = {
-  angry: "#f87171",
-  disgust: "#86efac",
-  fear: "#c084fc",
-  happy: "#fbbf24",
-  neutral: "#94a3b8",
-  sad: "#60a5fa",
-  surprise: "#fb923c",
+  angry: "#f87171", disgust: "#86efac", fear: "#c084fc",
+  happy: "#fbbf24", neutral: "#94a3b8", sad: "#60a5fa", surprise: "#fb923c",
 };
 
 interface Props {
   result: PredictResult | null;
+  /** batch mode: session running but results appear only after it ends */
   running?: boolean;
+  /** live mode: actively streaming but no detection yet */
+  detecting?: boolean;
 }
 
-export function EmotionDisplay({ result, running }: Props) {
+export function EmotionDisplay({ result, running, detecting }: Props) {
+  // Batch mode — session in progress, results come later
   if (running) {
     return (
       <div className="emotion-card emotion-card--idle">
@@ -31,6 +30,18 @@ export function EmotionDisplay({ result, running }: Props) {
     );
   }
 
+  // Live mode — connected, waiting for first frame response
+  if (detecting) {
+    return (
+      <div className="emotion-card emotion-card--idle">
+        <div className="emotion-card__pulse emotion-card__pulse--live" />
+        <p className="emotion-card__idle-text">Detecting emotions…</p>
+        <p className="emotion-card__idle-sub">Results update every 2 seconds</p>
+      </div>
+    );
+  }
+
+  // Nothing yet
   if (!result) {
     return (
       <div className="emotion-card emotion-card--idle">
@@ -46,7 +57,7 @@ export function EmotionDisplay({ result, running }: Props) {
       <div className="emotion-card emotion-card--idle">
         <div className="emotion-card__idle-icon">👤</div>
         <p className="emotion-card__idle-text">No face detected</p>
-        <p className="emotion-card__idle-sub">Make sure your face is visible in frame</p>
+        <p className="emotion-card__idle-sub">Make sure your face is visible and well-lit</p>
       </div>
     );
   }
@@ -64,20 +75,11 @@ export function EmotionDisplay({ result, running }: Props) {
     <div className="emotion-card">
       <div className="emotion-card__ring-wrap">
         <svg className="emotion-card__ring" viewBox="0 0 120 120" width="120" height="120">
+          <circle cx="60" cy="60" r={radius} fill="none" stroke="var(--surface-3)" strokeWidth="8" />
           <circle
-            cx="60" cy="60" r={radius}
-            fill="none"
-            stroke="var(--surface-3)"
-            strokeWidth="8"
-          />
-          <circle
-            cx="60" cy="60" r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
+            cx="60" cy="60" r={radius} fill="none"
+            stroke={color} strokeWidth="8" strokeLinecap="round"
+            strokeDasharray={circumference} strokeDashoffset={offset}
             transform="rotate(-90 60 60)"
             style={{ transition: "stroke-dashoffset 0.6s ease, stroke 0.4s ease" }}
           />
@@ -87,9 +89,7 @@ export function EmotionDisplay({ result, running }: Props) {
         </div>
       </div>
 
-      <div className="emotion-card__label" style={{ color }}>
-        {emotion}
-      </div>
+      <div className="emotion-card__label" style={{ color }}>{emotion}</div>
       <div className="emotion-card__confidence">{pct}% confidence</div>
 
       <div className="emotion-card__bars">
@@ -100,10 +100,7 @@ export function EmotionDisplay({ result, running }: Props) {
               <span className="emo-bar__emoji">{EMOJI[e]}</span>
               <span className="emo-bar__label">{e}</span>
               <div className="emo-bar__track">
-                <div
-                  className="emo-bar__fill"
-                  style={{ width: `${p * 100}%`, background: COLOR[e] }}
-                />
+                <div className="emo-bar__fill" style={{ width: `${p * 100}%`, background: COLOR[e] }} />
               </div>
               <span className="emo-bar__pct">{Math.round(p * 100)}%</span>
             </div>

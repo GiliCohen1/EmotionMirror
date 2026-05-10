@@ -70,5 +70,5 @@ export const predict = {
 
 export function createWSUrl(token: string) {
   const wsBase = BASE.replace(/^http/, "ws");
-  return `${wsBase}/ws/stream?token=${token}`;
+  return `${wsBase}/api/ws/stream?token=${token}`;
 }
