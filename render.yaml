@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: emotionmirror-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    # Free tier has 512 MB RAM — upgrade to "starter" ($7/mo) if you hit OOM
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: emotionmirror-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false   # set manually in Render dashboard
+      - key: ALLOWED_ORIGINS
+        sync: false   # set to ["https://<your-app>.vercel.app"] after frontend deploys
+
+databases:
+  - name: emotionmirror-db
+    databaseName: emotionmirror
+    user: emotionmirror
+    plan: free   # 256 MB, expires after 90 days on free tier

@@ -1,0 +1,25 @@
+# Web framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+websockets>=12.0
+
+# Database (PostgreSQL only in prod — no torch, no SQLite)
+sqlalchemy>=2.0.0
+asyncpg>=0.29.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+pydantic-settings>=2.0.0
+
+# LLM
+anthropic>=0.25.0
+
+# Inference: DeepFace pre-trained emotion model (no custom checkpoint needed)
+# torch/torchvision are intentionally excluded — saves ~2 GB on the image.
+deepface>=0.0.93
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+Pillow>=10.0.0
+tensorflow-cpu>=2.16.0

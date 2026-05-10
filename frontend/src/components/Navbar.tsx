@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import type { Theme } from "../hooks/useTheme";
+import { LogoIcon } from "./LogoIcon";
 
 interface Props {
   onLogout: () => void;
@@ -11,7 +12,7 @@ export function Navbar({ onLogout, theme, onToggleTheme }: Props) {
   return (
     <nav className="navbar">
       <div className="navbar__brand">
-        <span className="navbar__logo">🪞</span>
+        <span className="navbar__logo"><LogoIcon size={26} /></span>
         <span className="navbar__title">EmotionMirror</span>
       </div>
 

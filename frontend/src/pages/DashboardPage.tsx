@@ -150,6 +150,8 @@ export function DashboardPage({ onLogout, theme, onToggleTheme }: Props) {
   const [period, setPeriod] = useState<Period>("week");
   const [selectedBucket, setSelectedBucket] = useState<Bucket | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [filterFrom, setFilterFrom] = useState<string>("");
+  const [filterTo, setFilterTo] = useState<string>("");
 
   useEffect(() => {
     sessions.list().then(r => setSessionList(r.data)).finally(() => setLoading(false));
@@ -168,6 +170,14 @@ export function DashboardPage({ onLogout, theme, onToggleTheme }: Props) {
   }, {} as Record<Emotion, number>);
 
   const topEmotion = (Object.entries(emotionCounts).sort(([, a], [, b]) => b - a)[0]?.[0] as Emotion | undefined);
+
+  const filteredSessions = sessionList.filter(s => {
+    if (!filterFrom && !filterTo) return true;
+    const dateStr = new Date(s.started_at).toISOString().split("T")[0];
+    if (filterFrom && filterTo) return dateStr >= filterFrom && dateStr <= filterTo;
+    if (filterFrom) return dateStr === filterFrom;
+    return true;
+  });
 
   const onBarClick = useCallback((data: any) => {
     const b: Bucket = data?.activePayload?.[0]?.payload;
@@ -311,6 +321,54 @@ export function DashboardPage({ onLogout, theme, onToggleTheme }: Props) {
         {/* ── Session history ── */}
         <div className="dash-card">
           <h3 className="dash-card__title">Session History</h3>
+
+          {/* Part 1 — Date filter */}
+          <div className="session-filter">
+            <div className="session-filter__row">
+              <div className="session-filter__field">
+                <label className="session-filter__label">From</label>
+                <input
+                  type="date"
+                  className="session-filter__input"
+                  value={filterFrom}
+                  max={filterTo || undefined}
+                  onChange={e => { setFilterFrom(e.target.value); setExpandedId(null); }}
+                />
+              </div>
+              <div className="session-filter__sep">—</div>
+              <div className="session-filter__field">
+                <label className="session-filter__label">To</label>
+                <input
+                  type="date"
+                  className="session-filter__input"
+                  value={filterTo}
+                  min={filterFrom || undefined}
+                  onChange={e => { setFilterTo(e.target.value); setExpandedId(null); }}
+                />
+              </div>
+              {(filterFrom || filterTo) && (
+                <button
+                  className="btn btn--ghost btn--sm session-filter__clear"
+                  onClick={() => { setFilterFrom(""); setFilterTo(""); setExpandedId(null); }}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            {(filterFrom || filterTo) && (
+              <div className="session-filter__summary">
+                {filteredSessions.length} session{filteredSessions.length !== 1 ? "s" : ""} found
+                {filterFrom && filterTo
+                  ? ` · ${new Date(filterFrom).toLocaleDateString([], { month: "short", day: "numeric" })} – ${new Date(filterTo).toLocaleDateString([], { month: "short", day: "numeric" })}`
+                  : filterFrom
+                  ? ` · ${new Date(filterFrom).toLocaleDateString([], { weekday: "long", month: "long", day: "numeric" })}`
+                  : ""}
+              </div>
+            )}
+          </div>
+
+          {/* Part 2 — Session list */}
+          <div className="session-filter__divider" />
           {loading ? (
             <div className="dashboard-empty">Loading…</div>
           ) : sessionList.length === 0 ? (
@@ -318,9 +376,14 @@ export function DashboardPage({ onLogout, theme, onToggleTheme }: Props) {
               <span>📭</span>
               <p>No sessions yet. <Link to="/" className="link">Record your first!</Link></p>
             </div>
+          ) : filteredSessions.length === 0 ? (
+            <div className="dashboard-empty">
+              <span>🔍</span>
+              <p>No sessions match the selected date{filterFrom && filterTo ? " range" : ""}.</p>
+            </div>
           ) : (
             <div className="session-list">
-              {sessionList.map(s => {
+              {filteredSessions.map(s => {
                 const dom = dominantEmotion(s.readings);
                 const expanded = expandedId === s.id;
                 return (
