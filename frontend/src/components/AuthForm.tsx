@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { auth } from "../api";
 import type { Theme } from "../hooks/useTheme";
+import { LogoIcon } from "./LogoIcon";
 
 interface Props {
   onSuccess: (token: string) => void;
@@ -47,7 +48,7 @@ export function AuthForm({ onSuccess, theme, onToggleTheme }: Props) {
       </button>
       <div className="auth-card">
         <div className="auth-card__brand">
-          <span className="auth-card__logo">🪞</span>
+          <span className="auth-card__logo"><LogoIcon size={48} /></span>
           <h1 className="auth-card__name">EmotionMirror</h1>
           <p className="auth-card__tagline">Understand your emotions in real time</p>
         </div>
