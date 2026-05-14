@@ -11,17 +11,17 @@
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "typescript": "~6.0.2",
-    "vite": "^8.0.10"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/recharts": "^1.8.29"
   },
   "dependencies": {
-    "@types/react-router-dom": "^5.3.3",
-    "@types/recharts": "^1.8.29",
     "@vitejs/plugin-react": "^6.0.1",
     "axios": "^1.16.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.15.0",
-    "recharts": "^3.8.1"
+    "recharts": "^3.8.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.10"
   }
 }
