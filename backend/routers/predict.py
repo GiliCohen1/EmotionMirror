@@ -8,9 +8,10 @@ import json
 import logging
 from typing import Optional
 
-from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from sqlalchemy import select
 
 from backend.auth import get_current_user
 from backend.db.models import EmotionReading, EmotionSession, User
@@ -53,6 +54,9 @@ async def predict(
         return JSONResponse(status_code=500, content={"detail": str(exc)})
 
     if result.get("face_found") and body.session_id:
+        session_row = await db.get(EmotionSession, body.session_id)
+        if session_row is None or session_row.user_id != current_user.id:
+            raise HTTPException(status_code=403, detail="Session not found or access denied")
         reading = EmotionReading(
             session_id=body.session_id,
             emotion=result["emotion"],
@@ -120,6 +124,10 @@ async def stream(websocket: WebSocket):
             # Persist to DB if session active
             if result.get("face_found") and session_id:
                 async with AsyncSessionLocal() as db:
+                    session_row = await db.get(EmotionSession, session_id)
+                    if session_row is None or session_row.user_id != user_id:
+                        await websocket.send_json({"error": "Session not found or access denied"})
+                        continue
                     reading = EmotionReading(
                         session_id=session_id,
                         emotion=result["emotion"],

@@ -1,3 +1,4 @@
+import json
 from pydantic_settings import BaseSettings
 from pydantic import field_validator
 
@@ -5,8 +6,6 @@ from pydantic import field_validator
 class Settings(BaseSettings):
     # Database — SQLite for local dev; set DATABASE_URL env var in production
     database_url: str = "sqlite+aiosqlite:///./emotionmirror.db"
-
-    redis_url: str = "redis://localhost:6379"
 
     secret_key: str = "change-me-in-production"
     algorithm: str = "HS256"
@@ -28,10 +27,21 @@ class Settings(BaseSettings):
         "http://localhost:8081",
     ]
 
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def parse_origins(cls, v):
+        if isinstance(v, str):
+            v = v.strip()
+            try:
+                parsed = json.loads(v)
+                return parsed if isinstance(parsed, list) else [str(parsed)]
+            except json.JSONDecodeError:
+                return [o.strip() for o in v.split(",") if o.strip()]
+        return v
+
     @field_validator("database_url", mode="before")
     @classmethod
     def fix_postgres_url(cls, v: str) -> str:
-        # Render (and Heroku) provide "postgres://" URLs; asyncpg needs "postgresql+asyncpg://"
         if v.startswith("postgres://"):
             return v.replace("postgres://", "postgresql+asyncpg://", 1)
         if v.startswith("postgresql://") and "+asyncpg" not in v:
