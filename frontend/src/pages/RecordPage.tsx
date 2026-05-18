@@ -114,12 +114,11 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
     }
 
     // ── Batch mode: analyze captured frames now ──
-    await sessions.end(sid);
-
     const frames = [...framesRef.current];
     framesRef.current = [];
 
     if (frames.length === 0) {
+      await sessions.end(sid);
       setSessionNote("Session was too short — no frames captured. Record for at least 5 seconds.");
       return;
     }
@@ -130,6 +129,7 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
     const newReadings: Reading[] = [];
     let latestResult: PredictResult | null = null;
     let anyFaceFound = false;
+    let analyzeError: string | null = null;
 
     for (let i = 0; i < frames.length; i++) {
       try {
@@ -145,16 +145,23 @@ export function RecordPage({ onLogout, theme, onToggleTheme }: Props) {
             timestamp: new Date(frames[i].capturedAt).toISOString(),
           });
         }
-      } catch {}
+      } catch (err) {
+        console.error("Batch predict error on frame", i, err);
+        analyzeError = err instanceof Error ? err.message : String(err);
+      }
       setProgress({ done: i + 1, total: frames.length });
     }
+
+    await sessions.end(sid);
 
     setAnalyzing(false);
     setProgress(null);
     setLastResult(latestResult);
     setReadings(newReadings);
 
-    if (!anyFaceFound) {
+    if (!anyFaceFound && analyzeError) {
+      setSessionNote(`Analysis failed: ${analyzeError}. Check the browser console for details.`);
+    } else if (!anyFaceFound) {
       setSessionNote("No face detected in any frame. Make sure your face is well-lit and centered.");
     } else if (newReadings.length === 0) {
       setSessionNote("Face detected but confidence was too low. Try better lighting or move closer.");
