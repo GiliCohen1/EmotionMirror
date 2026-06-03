@@ -74,7 +74,7 @@ export function EmotionDisplay({ result, running, detecting }: Props) {
   return (
     <div className="emotion-card">
       <div className="emotion-card__ring-wrap">
-        <svg className="emotion-card__ring" viewBox="0 0 120 120" width="120" height="120">
+        <svg className="emotion-card__ring" viewBox="0 0 120 120" width="60" height="60">
           <circle cx="60" cy="60" r={radius} fill="none" stroke="var(--surface-3)" strokeWidth="8" />
           <circle
             cx="60" cy="60" r={radius} fill="none"
